@@ -1,0 +1,3 @@
+name=addon
+title=Add-ons pack - Example
+screenshot=text_bg.png

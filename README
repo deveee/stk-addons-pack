@@ -1,0 +1,17 @@
+SuperTuxKart Add-ons Pack
+
+
+Simple application that allows to extract some additional data for already 
+installed STK on Android.
+
+Data should be placed in data/extract directory. For example for Candela City 
+it should be:
+
+    data/extract/data/tracks/candela_city
+
+There is a simple configuration file in:
+
+    data/extract_settings.txt
+
+The name parameter in config file should be unique if more add-on packs 
+is used.
