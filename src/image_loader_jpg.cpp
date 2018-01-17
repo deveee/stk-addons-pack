@@ -14,13 +14,13 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "loader_jpg.hpp"
+#include "image_loader_jpg.hpp"
 #include "file_manager.hpp"
 
 #include <cstdio>
 #include <turbojpeg.h>
 
-Image* LoaderJPG::loadImage(std::string filename)
+Image* ImageLoaderJPG::loadImage(std::string filename)
 {
     tjhandle handle = tjInitDecompress();
 
@@ -86,13 +86,4 @@ Image* LoaderJPG::loadImage(std::string filename)
     file_manager->closeFile(file);
     
     return image;
-}
-
-void LoaderJPG::closeImage(Image* image)
-{
-    if (image == NULL)
-        return;
-    
-    delete[] image->data;
-    delete image;
 }

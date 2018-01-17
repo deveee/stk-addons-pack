@@ -14,21 +14,17 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LOADER_JPG_HPP
-#define LOADER_JPG_HPP
+#ifndef IMAGE_LOADER_JPG_HPP
+#define IMAGE_LOADER_JPG_HPP
 
 #include <string>
 
-#include "texture_manager.hpp"
+#include "image_loader.hpp"
 
-class LoaderJPG
+class ImageLoaderJPG
 {
 public:
-    LoaderJPG() {};
-    ~LoaderJPG() {};
-
     static Image* loadImage(std::string filename);
-    static void closeImage(Image* image);
 };
 
 #endif

@@ -14,45 +14,26 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef TEXTURE_MANAGER_HPP
-#define TEXTURE_MANAGER_HPP
+#ifndef IMAGE_LOADER_HPP
+#define IMAGE_LOADER_HPP
 
-#include <GLES3/gl3.h>
-
-#include <map>
 #include <string>
 
-struct Texture
+struct Image
 {
-    GLuint id;
     int width;
     int height;
-    float tex_w;
-    float tex_h;
     int channels;
+    int data_length;
+    unsigned char* data;
 };
 
-class TextureManager
+class ImageLoader
 {
-private:
-    bool m_supports_npot;
-    std::map<std::string, Texture*> m_textures;
-    static TextureManager* m_texture_manager;
-    
-    void loadTextures();
-    int getPotDimension(int value);
-
 public:
-    TextureManager();
-    ~TextureManager();
-    
-    bool init();
-    Texture* createTexture(int width, int height, int channels, 
-                           const void* data);
-    void deleteTexture(Texture* texture);
-    Texture* getTexture(std::string name) {return m_textures[name];}
-    
-    static TextureManager* getTextureManager() {return m_texture_manager;}
+    static Image* loadImage(std::string filename);
+    static void closeImage(Image* image);
 };
 
 #endif
+

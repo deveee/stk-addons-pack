@@ -14,16 +14,16 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "loader_png.hpp"
+#include "image_loader_png.hpp"
 #include "file_manager.hpp"
 
 #include <cstdio>
 #include <cstring>
 #include <vector>
 
-int LoaderPNG::m_read_pos = 0;
+int ImageLoaderPNG::m_read_pos = 0;
 
-void LoaderPNG::readFromMemory(png_structp png_ptr, png_bytep data, 
+void ImageLoaderPNG::readFromMemory(png_structp png_ptr, png_bytep data, 
                                png_size_t length)
 {
     char* png_data = (char*)png_get_io_ptr(png_ptr);
@@ -31,7 +31,7 @@ void LoaderPNG::readFromMemory(png_structp png_ptr, png_bytep data,
     m_read_pos += length;
 }
 
-Image* LoaderPNG::loadImage(std::string filename)
+Image* ImageLoaderPNG::loadImage(std::string filename)
 {
     png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, 
                                                  NULL, NULL);
@@ -131,13 +131,4 @@ Image* LoaderPNG::loadImage(std::string filename)
     file_manager->closeFile(file);
     
     return image;
-}
-
-void LoaderPNG::closeImage(Image* image)
-{
-    if (image == NULL)
-        return;
-    
-    delete[] image->data;
-    delete image;
 }

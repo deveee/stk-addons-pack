@@ -15,8 +15,7 @@
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "file_manager.hpp"
-#include "loader_jpg.hpp"
-#include "loader_png.hpp"
+#include "image_loader.hpp"
 #include "texture_manager.hpp"
 
 #include <cstring>
@@ -64,22 +63,14 @@ void TextureManager::loadTextures()
     
     for (std::string name : assets_list)
     {
-        std::string extension = file_manager->getExtension(name);
+        Image* image = ImageLoader::loadImage(name);
         
-        if (extension == ".png")
-        {
-            Image* image = LoaderPNG::loadImage(name);
-            m_textures[name] = createTexture(image->width, image->height,
-                                             image->channels, image->data);
-            LoaderPNG::closeImage(image);
-        }
-        else if (extension == ".jpg")
-        {
-            Image* image = LoaderJPG::loadImage(name);
-            m_textures[name] = createTexture(image->width, image->height, 
-                                             image->channels, image->data);
-            LoaderJPG::closeImage(image);
-        }
+        if (image == NULL)
+            continue;
+        
+        m_textures[name] = createTexture(image->width, image->height,
+                                         image->channels, image->data);
+        ImageLoader::closeImage(image);
     }
 }
 

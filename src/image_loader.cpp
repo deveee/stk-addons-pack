@@ -14,30 +14,35 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LOADER_PNG_HPP
-#define LOADER_PNG_HPP
+#include "file_manager.hpp"
+#include "image_loader.hpp"
+#include "image_loader_jpg.hpp"
+#include "image_loader_png.hpp"
 
-#define PNG_SETJMP_NOT_SUPPORTED
-#include <png.h>
-#include <string>
-
-#include "texture_manager.hpp"
-
-class LoaderPNG
+Image* ImageLoader::loadImage(std::string filename)
 {
-private:
-    static int m_read_pos;
+    Image* image = NULL;
     
-    static void readFromMemory(png_structp png_ptr, png_bytep data, 
-                               png_size_t length);
+    FileManager* file_manager = FileManager::getFileManager();
+    std::string extension = file_manager->getExtension(filename);
+    
+    if (extension == ".png")
+    {
+        image = ImageLoaderPNG::loadImage(filename);
+    }
+    else if (extension == ".jpg")
+    {
+        image = ImageLoaderJPG::loadImage(filename);
+    }
+    
+    return image;
+}
 
-public:
-    LoaderPNG() {};
-    ~LoaderPNG() {};
-
-    static Image* loadImage(std::string filename);
-    static void closeImage(Image* image);
-};
-
-#endif
-
+void ImageLoader::closeImage(Image* image)
+{
+    if (image == NULL)
+        return;
+    
+    delete[] image->data;
+    delete image;
+}
