@@ -72,6 +72,11 @@ SceneMain::SceneMain()
     m_text_bg = texture_manager->getTexture("text_bg.png");
     m_screenshot = texture_manager->getTexture(m_extract_screenshot);
     
+    if (m_screenshot == NULL)
+    {
+        m_screenshot = m_text_bg;
+    }
+    
     if (m_extract_dest.empty())
     {
         setState(ES_DEST_DIR_NOT_FOUND);
