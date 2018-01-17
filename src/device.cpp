@@ -133,6 +133,12 @@ bool Device::createEGLContext(EGLNativeDisplayType display,
         egl_params.opengl_api = CEGL_API_OPENGL;
     }
 
+#if (defined(__linux__) || defined(__CYGWIN__)) && !defined(ANDROID)    
+    egl_params.platform = CEGL_PLATFORM_X11;
+#else
+    egl_params.platform = CEGL_PLATFORM_DEFAULT;
+#endif
+
     egl_params.surface_type = CEGL_SURFACE_WINDOW;
     egl_params.force_legacy_device = m_creation_params.force_legacy_device;
     egl_params.handle_srgb = m_creation_params.handle_srgb;
